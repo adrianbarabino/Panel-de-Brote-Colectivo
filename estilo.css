@@ -1,0 +1,39 @@
+@charset "utf-8";
+/* CSS Document */
+
+#ubicacion{
+width: 400px;
+background: #EDEDED;
+height: 150px;
+border-radius: 15px;
+border: 1px solid black;
+padding: 5px;
+}
+#map_canvas {
+  height: 100%;
+  float:right;
+}
+#map_canvas a img{
+	display:none;
+}
+@media print {
+  html, body {
+    height: auto;
+  }
+
+  #map_canvas {
+    height: 650px;
+  }
+}
+.gmnoprint {
+	display:none;
+}
+#form input, #form select {
+	font-size: 1.5em;
+width: 200px;
+border-radius: 15px;
+border: 1px solid;
+padding: 5px;
+vertical-align: middle;
+margin-top:20px;
+}
