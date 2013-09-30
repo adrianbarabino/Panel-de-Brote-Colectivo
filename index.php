@@ -61,6 +61,8 @@ document.getElementById('image').innerHTML = "<img src='"+image+"'>"
 		    ]
  }); 
 </script>
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:700,300,300italic' rel='stylesheet' type='text/css'>
+
 <style>
 .glines{
 background: gray;
@@ -405,10 +407,10 @@ alert ("OK, tene cuidado!");
 <?php
 if($tabla == "lugares"){
 	?>
-<body  onload="initialize()" bgcolor="#000">
+<body  onload="initialize()">
 <?php }else{
 	?>
-    <body bgcolor="#000">
+    <body>
     
 <?php
 };
@@ -461,7 +463,6 @@ if($esAdmin){
                         <li><br /><a href="?tabla=programas">Programas</a></li>
 
             <li><br /><a href="?tabla=lugares">Lugares</a></li>
-            <li><br /><a href="configuracion.php">Configuración</a></li>
             <li><br /><a href="/webmail">Webmail</a></li>
             
           </ul>
@@ -489,6 +490,11 @@ if(!$accion){
 include("todas.php");
 
 	} else {
+		if($accion == "editar"){
+		?>	
+	    <h1><a href="?tabla=<?php echo $_GET['tabla']; ?>&accion=crear">Crear Nuev@</a></h1>
+		<?php
+		}
 	include("formularios.php");
 
 };

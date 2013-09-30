@@ -435,14 +435,45 @@ if ($_POST['accion'] == 'editar') {
 								$fecha_fin = date('Y-m-d H:i:s', $fecha_fin);
 								
 								
+								$cad      = $urltag;
+								$destino  = '/home/brotecol/public_html/cp'; // Carpeta donde se guardata 
+								$destino2 = '/home/brotecol/public_html/fechas'; // Carpeta donde se guardata 
+								$tipo = "jpg";
 								if ($_FILES["file"]["name"]) {
-												$cad      = $urltag;
-												$destino  = '/home/brotecol/public_html/cp'; // Carpeta donde se guardata 
-												$destino2 = '/home/brotecol/public_html/fechas'; // Carpeta donde se guardata 
 												
-												$sep  = obtenerExtensionFichero($_FILES["file"]["name"]); // Separamos image/ 
-												$tipo = "jpg";
-												move_uploaded_file($_FILES['file']['tmp_name'], $destino . '/' . $cad . '.' . $tipo); // Subimos el archivo 
+												$ext  = strtolower(obtenerExtensionFichero($_FILES["file"]["name"]));
+												if($ext == "jpg" or $ext == "jpeg" or $ext == "png" or $ext == "gif"){
+													// Por cuestiones de seguridad, verificamos que el tipo de archivo sea una imagen
+													move_uploaded_file($_FILES['file']['tmp_name'], $destino . '/' . $cad . '.' . $tipo); // Subimos el archivo 
+													$archivo = $cad . '.' . $tipo;
+
+													include('WideImage/WideImage.php');
+													$image = WideImage::load($archivo);
+													$marca = WideImage::load('marca.jpg');
+													$imagen_editada = $image->resize('600');
+													$negro = $imagen_editada->allocateColor(0,0,0);
+													$imagen_editada = $imagen_editada->resizeCanvas('100%', '100%+60', '0', '0', $negro);
+													$resultado = $imagen_editada->merge($marca, '0', 'bottom', '100');
+													$resultado->saveToFile($archivo, 80);
+
+													$viejo = $destino . '/' . $cad . '.' . $tipo;
+													$nuevo = $destino2 . '/' . $cad . '.jpg';
+													rename($viejo, $nuevo) or die("No se puede renombrar $viejo a $nuevo");
+												}
+								} //$_FILES["file"]["name"]
+								elseif($_POST['url']) {
+									// Este if es para cuando subimos una imagen de una fecha vía 
+									$url = $_POST['url'];
+ 
+									
+									$name = basename($url);
+									$ext  = strtolower(obtenerExtensionFichero($name));
+									print_r("La extension del fichero es: ".$ext);
+									 
+									// Verificamos que el fichero sea una imagen
+									if($ext == "jpg" or $ext == "jpeg" or $ext == "png" or $ext == "gif"){
+									// Y lo guardamos en la carpeta de imagenes...
+									$upload = file_put_contents($destino . '/' . $cad . '.' . $tipo,file_get_contents($url));
 												$archivo = $cad . '.' . $tipo;
 
 												include('WideImage/WideImage.php');
@@ -457,8 +488,9 @@ if ($_POST['accion'] == 'editar') {
 												$viejo = $destino . '/' . $cad . '.' . $tipo;
 												$nuevo = $destino2 . '/' . $cad . '.jpg';
 												rename($viejo, $nuevo) or die("No se puede renombrar $viejo a $nuevo");
-								} //$_FILES["file"]["name"]
-								else {
+											}
+
+								}else{
 												$query_a_db = "SELECT * FROM fechas WHERE id=$id";
 												
 												
@@ -483,57 +515,7 @@ if ($_POST['accion'] == 'editar') {
 								}
 								;
 
-/*
 
-$access_token = 'AAAFhjULtqrwBAHQvK0jzV0CQJ0Dk9skxmwfdLR7BL2HKxiuFMG4w8wwjom6r1KKJeWCHWey63qYXrmmD9E1UxBIETrZBu5uZCflvdKuEMQZA7CXroWS';
-
-$params = array(
-        'access_token' => $access_token
-);
- 
-
-$fanpage = '409971599018812';
- 
-
-$accounts = $facebook->api('/adrianbarabino/accounts', 'GET', $params);
-$data = $accounts['data'];
-foreach($data as $account) {
-        if( $account['id'] == $fanpage || $account['name'] == $fanpage )
-                $fanpage_token = $account['access_token'];
-}
-
-$fanpage_albums = $facebook->api($fanpage . '/albums', 'GET', $params);
-$albums = $fanpage_albums['data'];
-$sorted = array();
-foreach($albums as $album) {
-       
-               
-        $sorted[] = $album;
-        }
-        
-        
-
-$album_id = $sorted[0]['id']; // Get the first one. Shouldn't be empty!
- $rutaimagen = "/home/brotecol/public_html/fechas/".$urltag.".jpg";
-
-$args = array(
-        'message' => utf8_encode($contenido),
-        'image' => $rutaimagen,
-        'aid' => $album_id,
-        'no_story' => 1,
-        'access_token' => $fanpage_token 
-);
- 
-$photo = $facebook->api($album_id . '/photos', 'post', $args);
-if( is_array( $photo ) && ! empty( $photo['id'] ) )
-        echo 'Photo uploaded. Check it on Graph API Explorer. ID: ' . $photo['id'];
-
-
-
-
-
-$facebook->setFileUploadSupport(true);
-  */
 
 
 								$campos = array(
@@ -887,18 +869,66 @@ if ($_POST['accion'] == 'crear') {
 								$fecha_fin = mktime($b['tm_hour'], $b['tm_min'], 0, $b['tm_mon'] + 1, $b['tm_mday'], $b['tm_year'] + 1900);
 								$fecha_fin = date('Y-m-d H:i:s', $fecha_fin);
 								
+								$cad      = $urltag;
+								$destino  = '/home/brotecol/public_html/cp'; // Carpeta donde se guardata 
+								$destino2 = '/home/brotecol/public_html/fechas'; // Carpeta donde se guardata 
+								$tipo = "jpg";
 								if ($_FILES["file"]["name"]) {
 												echo $_FILES["file"]["name"];
-												$cad      = $urltag;
 												// Fin de la creacion de la cadena aletoria 
 												$tamano   = $_FILES['file']['size']; // Leemos el tamaño del fichero 
-												$destino  = '/home/brotecol/public_html/cp'; // Carpeta donde se guardata 
-												$destino2 = '/home/brotecol/public_html/fechas'; // Carpeta donde se guardata 
 												
-												$sep  = obtenerExtensionFichero($_FILES["file"]["name"]); // Separamos image/ 
-												$tipo = "jpg";
-												move_uploaded_file($_FILES['file']['tmp_name'], $destino . '/' . $cad . '.' . $tipo); // Subimos el archivo 
+												$sep  = strtolower(obtenerExtensionFichero($_FILES["file"]["name"]));
+												if($ext == "jpg" or $ext == "jpeg" or $ext == "png" or $ext == "gif"){
+
+													move_uploaded_file($_FILES['file']['tmp_name'], $destino . '/' . $cad . '.' . $tipo); // Subimos el archivo 
+													$archivo = $cad . '.' . $tipo;
+													include('WideImage/WideImage.php');
+													$image = WideImage::load($archivo);
+													$marca = WideImage::load('marca.jpg');
+													$imagen_editada = $image->resize('600');
+													$negro = $imagen_editada->allocateColor(0,0,0);
+													$imagen_editada = $imagen_editada->resizeCanvas('100%', '100%+60', '0', '0', $negro);
+													$resultado = $imagen_editada->merge($marca, '0', 'bottom', '100');
+													$resultado->saveToFile($archivo, 80);
+													echo $archivo;
+													
+													// *** 1) Initialise / load image
+													print_r($archivo);
+													
+													// *** 2) Resize image (options: exact, portrait, landscape, auto, crop)
+													
+													
+													// *** 3) Save image
+													$viejo = $destino . '/' . $cad . '.' . $tipo;
+													$nuevo = $destino2 . '/' . $cad . '.jpg';
+													rename($viejo, $nuevo) or die("No se puede renombrar $viejo a $nuevo");
+													
+													$carpeta  = $destino . '/' . $cad . '.' . $tipo;
+													$carpeta2 = '/fechas/' . $cad . '.' . $tipo;
+													
+													print_r($carpeta);
+													echo $carpeta;
+													echo $carpeta2;
+													echo $_FILES['file']['tmp_name'];
+													print_r($_FILES['file']['tmp_name']);
+												}
+								} //$_FILES["file"]["name"]
+								 elseif($_POST['url']) {
+									// Este if es para cuando subimos una imagen de una fecha vía 
+									$url = $_POST['url'];
+ 
+									
+									$name = basename($url);
+									$ext  = strtolower(obtenerExtensionFichero($name));
+									print_r("La extension del fichero es: ".$ext);
+									 
+									// Verificamos que el fichero sea una imagen
+									if($ext == "jpg" or $ext == "jpeg" or $ext == "png" or $ext == "gif"){
+									// Y lo guardamos en la carpeta de imagenes...
+									$upload = file_put_contents($destino . '/' . $cad . '.' . $tipo,file_get_contents($url));
 												$archivo = $cad . '.' . $tipo;
+
 												include('WideImage/WideImage.php');
 												$image = WideImage::load($archivo);
 												$marca = WideImage::load('marca.jpg');
@@ -907,29 +937,13 @@ if ($_POST['accion'] == 'crear') {
 												$imagen_editada = $imagen_editada->resizeCanvas('100%', '100%+60', '0', '0', $negro);
 												$resultado = $imagen_editada->merge($marca, '0', 'bottom', '100');
 												$resultado->saveToFile($archivo, 80);
-												echo $archivo;
-												
-												// *** 1) Initialise / load image
-												print_r($archivo);
-												
-												// *** 2) Resize image (options: exact, portrait, landscape, auto, crop)
-												
-												
-												// *** 3) Save image
+
 												$viejo = $destino . '/' . $cad . '.' . $tipo;
 												$nuevo = $destino2 . '/' . $cad . '.jpg';
 												rename($viejo, $nuevo) or die("No se puede renombrar $viejo a $nuevo");
-												
-												$carpeta  = $destino . '/' . $cad . '.' . $tipo;
-												$carpeta2 = '/fechas/' . $cad . '.' . $tipo;
-												
-												print_r($carpeta);
-												echo $carpeta;
-												echo $carpeta2;
-												echo $_FILES['file']['tmp_name'];
-												print_r($_FILES['file']['tmp_name']);
-								} //$_FILES["file"]["name"]
-								;
+											}
+
+								};
 
 
 								

@@ -228,8 +228,15 @@ while($bandas=mysql_fetch_array($ejecuto_query)){
   <form id="form" action="acciones.php" ENCTYPE="multipart/form-data"  method="post" name="form">
   <input type="hidden" id="accion" name="accion" value="<?php echo $accion; ?>">
     <input type="hidden" id="tabla" name="tabla" value="fechas">
+    <!-- Ahora el panel permite subir imagenes por URL -->
+  <fieldset>
+    <h3>Imagen</h3>
+    <label for="file">Subir Imagen:</label>
+    <input name="file" id="file" type="file"  onChange="ver(form.file.value)"> <br>
+    <label for="url">URL de Imagen:</label>
+  <input type="text" placeholder="http://www.imagen.com/imagen.jpg" value="" id="url" name="url" /> <br>
+  </fieldset>
     <input type="hidden" id="id" name="id" value="<?php echo $idfecha; ?>">
-    Imagen: <input name="file" id="file" type="file"  onChange="ver(form.file.value)"> 
 
   <input type="text" id="titulo" value="<?php echo $titulo; ?>" onclick="if(this.value=='Titulo') this.value=''" onblur="if(this.value=='') this.value='Titulo'" name="titulo" /> <br>
   <input type="text" id="tags" value="<?php echo $tags; ?>" onclick="if(this.value=='Tags') this.value=''" onblur="if(this.value=='') this.value='Tags'" name="tags" /> <br>
@@ -292,11 +299,7 @@ while($lugares=mysql_fetch_array($ejecuto_query)){
 
    <textarea name="contenido" class="tinymce" id="contenido"><?php echo $contenido; ?></textarea>
 
-<div style="width:100%;background:#fff;padding: 1em; margin:0.5eM">
 
- <label for="facebook">Publicar a Facebook</label>
-    <input type="checkbox" id="facebook" name="facebook" value="si">
-  </div>
     
 
 
