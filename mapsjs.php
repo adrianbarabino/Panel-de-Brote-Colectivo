@@ -1,6 +1,6 @@
     <link rel="stylesheet" href="http://openlayers.org/dev/theme/default/style.css" type="text/css">
     <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false"></script>
-        <script src="http://openlayers.org/dev/OpenLayers.js"></script>
+    <script src="http://openlayers.org/api/OpenLayers.js"></script>
 <script type="text/javascript">
 var map;
       var markers = [];

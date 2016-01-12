@@ -61,6 +61,21 @@ document.getElementById('image').innerHTML = "<img src='"+image+"'>"
 		    ]
  }); 
 </script>
+
+<script>
+	$(document).on("ready", function () {
+		
+		$(".boton_facebook").on("click", function (e) {
+			e.preventDefault();
+			var id = $(this).attr("href").split("=")[2];
+			$.post( "facebook.php", { tipo: "fecha", id: id })
+			  .done(function( data ) {
+			  	console.log(data);
+			    alert( "Resultado: " + data );
+			  });
+		})
+	})
+</script>
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:700,300,300italic' rel='stylesheet' type='text/css'>
 
 <style>

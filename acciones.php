@@ -1123,19 +1123,17 @@ if ($_POST['accion'] == 'crear') {
 								
 								if ($tabla == "canciones") {
 												$fichero_actual = "" . $id . "-" . $idbanda . ".mp3";
-												$fichero_wav    = "" . $id . "-" . $idbanda . ".wav";
 												$fichero_ogg    = "" . $id . "-" . $idbanda . ".ogg";
 												
-												$orden = system("cd /home/brotecol/public_html/canciones/; ffmpeg -i " . $fichero_actual . " -ab 6400 " . $fichero_ogg);
+												$orden = system("cd /home/brotecol/public_html/canciones/; ffmpeg -i " . $fichero_actual . " -acodec libvorbis -aq 6 " . $fichero_ogg);
 												echo $orden;
 												print_r($orden);
 								} //$tabla == "canciones"
 								if ($tabla == "programas") {
 												$fichero_actual = "" . $urltag . ".mp3";
-												$fichero_wav    = "" . $urltag . ".wav";
 												$fichero_ogg    = "" . $urltag . ".ogg";
 												
-												$orden = system("cd /home/brotecol/public_html/programasaudios/; ffmpeg -i " . $fichero_actual . " -ab 6400 " . $fichero_ogg);
+												$orden = system("cd /home/brotecol/public_html/programasaudios/; ffmpeg -i " . $fichero_actual . " -acodec libvorbis -aq 6 " . $fichero_ogg);
 												echo $orden;
 												print_r($orden);
 								} //$tabla == "programas"

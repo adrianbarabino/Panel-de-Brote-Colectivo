@@ -281,6 +281,7 @@ echo "Ninguna"; };
               <td><?php echo $todas['urltag']; ?></td>
               <td width="28"><a href="index.php?tabla=fechas&accion=editar&id=<?php echo $idfecha; ?>"><img src="http://docs.oracle.com/cd/E13159_01/osb/docs10gr3/consolehelp/wwimages/icon_edit_item.gif" alt="picture" width="16" height="16" class="tabpimpa" /></a>
               <a href="entradas.php?borrar=<?php echo $idfecha; ?>"><img src="http://www.ecosdeargentina.com/images/interfaz/delete2_16x16.png" alt="picture" width="16" height="16" class="tabpimpa" /></a>
+              <a class="boton_facebook" href="facebook.php?tipo=fechas&id=<?php echo $idfecha; ?>"><img src="http://boletoeducativogratuito.cba.gov.ar/Imagenes/icono_facebook.gif" alt="picture" width="16" height="16" class="tabpimpa" /></a>
 </td>
                      
 
