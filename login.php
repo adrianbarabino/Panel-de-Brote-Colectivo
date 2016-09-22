@@ -38,19 +38,19 @@ mysql_free_result($result);
 if(!$loginCorrecto){
       echo'<SCRIPT LANGUAGE="javascript">
       alert("No estas logeado");
-      location.href = "ingresar.php";
+      location.href = "ingreso.php";
       </SCRIPT>';
 };
 if(!$esAdmin){
       echo'<SCRIPT LANGUAGE="javascript">
       alert("No eres administrador");
-      location.href = "ingresar.php";
+      location.href = "ingreso.php";
       </SCRIPT>';
 };
 if(!$esConfirmado){
       echo'<SCRIPT LANGUAGE="javascript">
       alert("No confirmaste tu email !");
-      location.href = "ingresar.php";
+      location.href = "ingreso.php";
       </SCRIPT>';
 };
 ?>

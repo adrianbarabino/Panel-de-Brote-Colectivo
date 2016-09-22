@@ -18,8 +18,9 @@ $accion = $_GET['accion'];
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"  /> <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-<link rel="stylesheet" type="text/css" href="estilo.css" media="screen" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"  /> 
+    <meta charset="utf-8">
+
 
 <title>Brote Colectivo - Administracion</title>
 
@@ -30,18 +31,26 @@ function ver(image){
 document.getElementById('image').innerHTML = "<img src='"+image+"'>" 
 }
 </script>
-<script type="text/javascript">
-	google.load("jquery", "1");
-</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 
 <!-- Load TinyMCE -->
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="estilo.css" media="screen" />
 
 <script src="./tinymce/js/tinymce/tinymce.min.js"></script>
 <script>
         tinymce.init({
         	selector:'textarea',
 		    theme: "modern",
-		    width: 800,
+		    width: 670,
 		    height: 400,
 		    plugins: [
 		         "advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker",
@@ -125,7 +134,7 @@ if($tabla == "noticias"){
 	$tags = "Tags";
 	$contenido = "Contenido...";
 	$urltag = "URL tag";
-	$idbanda = "ID Banda";
+	$idbanda = "[0]";
 	$fecha = "DD/MM/AAAA HH:MM";
 	
 	}else{
@@ -336,8 +345,8 @@ if($tabla == "fechas"){
 	$tags = "Tags";
 	$contenido = "Contenido...";
 	$urltag = "URL tag";
-	$idbanda = "ID Lugar";
-	$idbanda = "ID Banda";
+	$idlugar = "ID Lugar";
+	$idbanda = "[0]";
 	$fecha_inicio = "DD/MM/AAAA HH:MM";
 	$fecha_fin = "DD/MM/AAAA HH:MM";
 
@@ -426,7 +435,9 @@ if($tabla == "lugares"){
 <?php }else{
 	?>
     <body>
-    
+	<div class="container">
+		
+
 <?php
 };
 function recortar_texto($texto, $longitud = 180) { 
@@ -464,24 +475,53 @@ $entradasrows2 = mysql_num_rows($entradasquery);
 
 
 if($esAdmin){
-?>  <center>
-<div id="menu">
-          <ul>
-            <li><br /><a href="?tabla=noticias">Entradas</a></li>
-            <li><br /><a href="?tabla=fechas">Fechas</a></li>
-            <li><br /><a href="?tabla=videos">Videos</a></li>
-                        <li><br /><a href="?tabla=letras">Letras</a></li>
+?> 
+<?php
+function active($currect_page){
+  $url = $_GET['tabla'];
+  if($currect_page == $url){
+      echo 'class="active"'; //class name in css 
+  } 
+}
+?>
+ <center>
+<!-- Static navbar -->
+      <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="./index.php">Panel Brote Colectivo</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li <?php active("noticias");?>><a href="?tabla=noticias">Noticias</a></li>
+              <li <?php active("fechas");?>><a href="?tabla=fechas">Fechas</a></li>
+              <li <?php active("bandas");?>><a href="?tabla=bandas">Artistas</a></li>
+              <li <?php active("canciones");?>><a href="?tabla=canciones">Canciones</a></li>
+              <li <?php active("videos");?>><a href="?tabla=videos">Videos</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Otros <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li <?php active("letras");?>><a href="?tabla=letras">Letras</a></li>
+                  <li <?php active("newsletter");?>><a href="?tabla=newsletter">Newsletter</a></li>
+                  <li <?php active("programas");?>><a href="?tabla=programas">Programas</a></li>
+                  <li <?php active("lugares");?>><a href="?tabla=lugares">Lugares</a></li>
+                </ul>
+              </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="./salir.php">Salir</a></li>
+              <li><a href="/webmail">WebMail</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div><!--/.container-fluid -->
+      </nav>
 
-            <li><br /><a href="?tabla=canciones">Canciones</a></li>
-                        <li><br /><a href="?tabla=bandas">Bandas</a></li>
-                        <li><br /><a href="?tabla=newsletter">Newsletter</a></li>
-                        <li><br /><a href="?tabla=programas">Programas</a></li>
-
-            <li><br /><a href="?tabla=lugares">Lugares</a></li>
-            <li><br /><a href="/webmail">Webmail</a></li>
-            
-          </ul>
-          </div><br />
         
 <?php 
 if($_GET['editado']){
@@ -499,7 +539,7 @@ if($_GET['picassa'] == '1'){
 }
 if(!$accion){
 	if($_GET['tabla']){?>
-<h1><a href="?tabla=<?php echo $_GET['tabla']; ?>&accion=crear">Crear Nuev@</a></h1>
+<h1><a href="?tabla=<?php echo $_GET['tabla']; ?>&accion=crear" class="btn btn-primary btn-lg btn-block">Crear Nuev@</a></h1>
 <?php
 };
 include("todas.php");
@@ -507,7 +547,7 @@ include("todas.php");
 	} else {
 		if($accion == "editar"){
 		?>	
-	    <h1><a href="?tabla=<?php echo $_GET['tabla']; ?>&accion=crear">Crear Nuev@</a></h1>
+	    <h1><a href="?tabla=<?php echo $_GET['tabla']; ?>&accion=crear" class="btn btn-primary btn-lg btn-block">Crear Nuev@</a></h1>
 		<?php
 		}
 	include("formularios.php");
@@ -523,6 +563,7 @@ include("todas.php");
 
           
 </center>
+</div>
 </body>
 </html>
 <?php

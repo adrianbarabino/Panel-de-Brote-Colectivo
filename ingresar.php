@@ -51,14 +51,14 @@ if(isset($_COOKIE["email"]) && isset($_COOKIE["pwd"]))
 {
 echo 'Ya estás logeado!, para salir de tu usuario haz click <a href="salir.php">aqui</a>.';
 }else{
-echo '<FORM ACTION="ingresar.php" METHOD="post">
-      Email : <INPUT TYPE="text" NAME="email" SIZE=20 >
-      <BR>
-      Password: <INPUT TYPE="password" NAME="password"
-      SIZE=28 MAXLENGTH=20>
-      <BR>
-      <INPUT TYPE="submit" CLASS="boton" VALUE="Ingresar">
-      </FORM>';
+?>
+
+<SCRIPT LANGUAGE="javascript">
+setTimeout(function () {
+	location.href = "ingreso.php";
+}, 1500)
+</SCRIPT>
+<?
 };
 
 ?>

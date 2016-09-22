@@ -28,29 +28,20 @@ padding: 5px;
 .gmnoprint {
 	display:none;
 }
-#form input, #form select {
-	font-size: 1.5em;
-width: 200px;
-border-radius: 0.3em;
-border: 1px solid;
-padding: 5px;
-vertical-align: middle;
-margin-top:20px;
-}
+
 fieldset{
-  width:800px;
+  width:700px;
   margin:0;
-  color:white;
+
   padding:0;
 }
 
 body{
-  background: #222;
-  color:white;
+
   font-family: "Open Sans", arial;
+  margin:1em;
 }
 
-a{color:white;}
 
 fieldset h3{
   margin: 0.3em;
@@ -59,4 +50,29 @@ fieldset h3{
 
 fieldset input{
   border:none!important;
+}
+
+.form-panel {
+  max-width: 700px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-panel-heading,
+.form-panel .checkbox {
+  margin-bottom: 10px;
+}
+.form-panel .checkbox {
+  font-weight: normal;
+}
+.form-panel .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-panel .form-control:focus {
+  z-index: 2;
 }

@@ -9,7 +9,10 @@ ini_set('display_errors', 1);
 
 function obtenerExtensionFichero($str)
 {
-				return end(explode(".", $str));
+				$str = end(explode(".", $str));
+				$str = explode("?", $str);
+				return $str[0];
+
 }
 ;
 

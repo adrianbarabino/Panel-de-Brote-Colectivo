@@ -4,12 +4,10 @@ $entradassql = "SELECT * FROM noticias ORDER BY fecha DESC";
 $entradasquery = mysql_query($entradassql, $conexion) or die(mysql_error());
 $entradasrows = mysql_num_rows($entradasquery);
 
- echo $tabla;
- echo asd;
 
  if($tabla == "noticias"){
    
-   ?><table width="100%" border="0" cellspacing="0" cellpadding="0" class="glines">
+   ?><table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-stripped">
             <tr>
               
               <th width="100">ID</th>
@@ -31,6 +29,14 @@ if ($entradasrows> 0) {
      $contenido = $todas['contenido'];
 $descripcion = strip_tags(recortar_texto($contenido, 100), "");
 ?>
+
+ <form id="form" action="acciones.php" method="post" name="form">
+  <input type="hidden" id="accion" name="accion" value="borrar">
+    <input type="hidden" id="tabla" name="tabla" value="noticias">
+    <input type="hidden" id="id" name="id" value="<?php echo $identrada; ?>">
+        <input type="hidden" id="nombre" name="nombre" value="<?php echo $todas['titulo']; ?>">
+
+
             <tr>          
               <td><?php echo $identrada; ?></td>
               <td><?php 
@@ -66,14 +72,13 @@ echo "Ninguna"; };
               <td><?php echo $descripcion; ?></td>
               <td><?php echo $todas['urltag']; ?></td>
               <td width="28"><a href="index.php?tabla=noticias&accion=editar&id=<?php echo $identrada; ?>"><img src="http://docs.oracle.com/cd/E13159_01/osb/docs10gr3/consolehelp/wwimages/icon_edit_item.gif" alt="picture" width="16" height="16" class="tabpimpa" /></a>
-              <a href="entradas.php?borrar=<?php echo $identrada; ?>"><img src="http://www.ecosdeargentina.com/images/interfaz/delete2_16x16.png" alt="picture" width="16" height="16" class="tabpimpa" /></a>
+              <input type="image" src="http://www.ecosdeargentina.com/images/interfaz/delete2_16x16.png" onclick='javascript:borrar("<?php echo $identrada; ?>", "<?php echo $todas['titulo']; ?>");' />
 </td>
                      
 
 
-            </tr>
+            </tr></form>
 <?
-echo "asdasda";
 } 
 }
 ?>          </table>
@@ -81,7 +86,7 @@ echo "asdasda";
 
 }elseif($tabla == "programas"){
    
-   ?><table width="100%" border="0" cellspacing="0" cellpadding="0" class="glines">
+   ?><table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-stripped">
             <tr>
               
               <th width="100">ID</th>
@@ -150,7 +155,6 @@ echo "Ninguna"; };
 
             </tr>
 <?
-echo "asdasda";
 } 
 }
 ?>          </table>
@@ -159,7 +163,7 @@ echo "asdasda";
  }elseif($tabla == "lugares"){
 	 
  ?>
- <table width="100%" border="0" cellspacing="0" cellpadding="0" class="glines">
+ <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-stripped">
             <tr>
               
               <th width="100">ID</th>
@@ -213,10 +217,11 @@ if ($entradasrows> 0) {
 <?php
  }elseif($tabla == "fechas"){
    
-   ?><table width="100%" border="0" cellspacing="0" cellpadding="0" class="glines">
+   ?><table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-stripped">
             <tr>
               
               <th width="100">ID</th>
+              <th width="300">Afiche</th>
               <th width="100">Banda</th>
               <th width="100">Lugar</th>
 
@@ -243,8 +248,15 @@ if ($entradasrows> 0) {
      $contenido = $todas['contenido'];
 $descripcion = strip_tags(recortar_texto($contenido, 100), "");
 ?>
+ <form id="form" action="acciones.php" method="post" name="form">
+  <input type="hidden" id="accion" name="accion" value="borrar">
+    <input type="hidden" id="tabla" name="tabla" value="fechas">
+    <input type="hidden" id="id" name="id" value="<?php echo $idfecha; ?>">
+        <input type="hidden" id="nombre" name="nombre" value="<?php echo $todas['titulo']; ?>">
+
             <tr>          
               <td><?php echo $idfecha; ?></td>
+              <td>    <div class="thumbnail"><img src="/fechas/<?php echo $todas['urltag']; ?>.jpg" alt="afiche" class="img-rounded"></div></td>
               <td><?php 
         $idbanda = $todas['idbanda'];
       
@@ -280,13 +292,15 @@ echo "Ninguna"; };
               <td><?php echo $descripcion; ?></td>
               <td><?php echo $todas['urltag']; ?></td>
               <td width="28"><a href="index.php?tabla=fechas&accion=editar&id=<?php echo $idfecha; ?>"><img src="http://docs.oracle.com/cd/E13159_01/osb/docs10gr3/consolehelp/wwimages/icon_edit_item.gif" alt="picture" width="16" height="16" class="tabpimpa" /></a>
-              <a href="entradas.php?borrar=<?php echo $idfecha; ?>"><img src="http://www.ecosdeargentina.com/images/interfaz/delete2_16x16.png" alt="picture" width="16" height="16" class="tabpimpa" /></a>
+              <input type="image" src="http://www.ecosdeargentina.com/images/interfaz/delete2_16x16.png" onclick='javascript:borrar("<?php echo $idfecha; ?>", "<?php echo $todas['titulo']; ?>");' />
               <a class="boton_facebook" href="facebook.php?tipo=fechas&id=<?php echo $idfecha; ?>"><img src="http://boletoeducativogratuito.cba.gov.ar/Imagenes/icono_facebook.gif" alt="picture" width="16" height="16" class="tabpimpa" /></a>
 </td>
+
                      
 
 
             </tr>
+</form>
 <?
 } 
 }
@@ -295,7 +309,7 @@ echo "Ninguna"; };
 
  }elseif($tabla == "videos"){
    
-   ?><table width="100%" border="0" cellspacing="0" cellpadding="0" class="glines">
+   ?><table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-stripped">
             <tr>
               
               <th width="100">ID</th>
@@ -358,7 +372,6 @@ echo "Ninguna"; };
 
             </tr>
 <?
-echo $entradassql;
 } 
 }
 ?>          </table>
@@ -366,7 +379,7 @@ echo $entradassql;
 
  }elseif($tabla == "album"){
    
-   ?><table width="100%" border="0" cellspacing="0" cellpadding="0" class="glines">
+   ?><table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-stripped">
             <tr>
               
               <th width="100">ID</th>
@@ -437,7 +450,7 @@ echo $entradassql;
 
  }elseif($tabla == "canciones"){
    
-   ?><table width="100%" border="0" cellspacing="0" cellpadding="0" class="glines">
+   ?><table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-stripped">
             <tr>
               
               <th width="100">ID</th>
@@ -517,7 +530,6 @@ $noticiabandas = json_decode($todas['idbanda']);
 
             </tr>
 <?
-echo $entradassql;
 } 
 }
 ?>          </table>
@@ -525,7 +537,7 @@ echo $entradassql;
 
  }elseif($tabla == "letras"){
    
-   ?><table width="100%" border="0" cellspacing="0" cellpadding="0" class="glines">
+   ?><table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-stripped">
             <tr>
               
               <th width="100">ID</th>
@@ -569,7 +581,6 @@ echo $todas['titulo']
 
             </tr>
 <?
-echo $entradassql;
 } 
 }
 ?>          </table>
@@ -578,7 +589,7 @@ echo $entradassql;
  }elseif($tabla == "bandas"){
    
  ?>
- <table width="100%" border="0" cellspacing="0" cellpadding="0" class="glines">
+ <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-stripped">
             <tr>
               
               <th width="100">ID</th>
