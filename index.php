@@ -564,6 +564,15 @@ include("todas.php");
           
 </center>
 </div>
+<script>
+	$(document).on("ready", function () {
+		$("input#urltag").keyup(function () {
+    var textValue = $(this).val();
+    textValue =textValue.replace(/ /g,"-");
+    $(this).val(textValue);
+});
+	})
+</script>
 </body>
 </html>
 <?php
